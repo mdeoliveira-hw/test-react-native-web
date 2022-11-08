@@ -1,54 +1,25 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
-import React, {type PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-import Button from './components/Button';
+import React from 'react';
+import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
+import {Router, Routes, Route} from './components/Router';
+import Screen1 from './screens/Screen1';
+import Screen2 from './screens/Screen2';
+import Home from './screens/Home';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
-  const backgroundStyle = {
-    backgroundColor: '#FFF',
-  };
-
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <View>
-          <Text style={styles.text}>Hello world</Text>
-          <Button />
-        </View>
-      </ScrollView>
+    <SafeAreaView>
+      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <Router>
+        <Routes>
+          <Route element={<Home />} path="" />
+          <Route element={<Screen1 />} path="screen1" />
+          <Route element={<Screen2 />} path="screen2" />
+        </Routes>
+      </Router>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  text: {
-    color: 'red',
-  },
-});
 
 export default App;
