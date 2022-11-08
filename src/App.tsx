@@ -8,8 +8,10 @@
  * @format
  */
 
+import {NavigationContainer} from '@react-navigation/native';
 import React, {type PropsWithChildren} from 'react';
 import {
+  Platform,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -19,6 +21,25 @@ import {
   View,
 } from 'react-native';
 import Button from './components/Button';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+
+function HomeScreen() {
+  return (
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <Text>Home!</Text>
+    </View>
+  );
+}
+
+function SettingsScreen() {
+  return (
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <Text>Settings!</Text>
+    </View>
+  );
+}
+
+const Tab = createBottomTabNavigator();
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -28,24 +49,26 @@ const App = () => {
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <SafeAreaView style={styles.fullHeight}>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <View>
-          <Text style={styles.text}>Hello world</Text>
-          <Button />
-        </View>
-      </ScrollView>
+      <NavigationContainer>
+        <Tab.Navigator>
+          <Tab.Screen name="Home" component={HomeScreen} />
+          <Tab.Screen name="Settings" component={SettingsScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  fullHeight: {
+    flex: 1,
+    height: Platform.OS === 'web' ? '100vh' : '100%',
+  },
   text: {
     color: 'red',
   },
